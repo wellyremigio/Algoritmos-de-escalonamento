@@ -47,7 +47,7 @@ plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
 
 plt.title("Randon com head posionado no meio")
 plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Latência Total (ms)")
+plt.ylabel("D")
 plt.xticks(tamanhos)
 plt.legend()
 

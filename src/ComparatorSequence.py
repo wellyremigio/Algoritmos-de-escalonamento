@@ -48,9 +48,9 @@ plt.figure(figsize=(10, 6))
 plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
 plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
 
-plt.title("Em ordem com head posionado no meio")
+plt.title("Sequencial com head na requisição do meio")
 plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Latência Total (ms)")
+plt.ylabel("Distância Percorrida")
 plt.xticks(tamanhos)
 plt.legend()
 
@@ -98,9 +98,9 @@ plt.figure(figsize=(10, 6))
 plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
 plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
 
-plt.title("Em ordem com head posionado no final")
+plt.title("Sequencial com head na requisição do meio")
 plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Latência Total (ms)")
+plt.ylabel("Distância Percorrida")
 plt.xticks(tamanhos)
 plt.legend()
 
