@@ -1,4 +1,9 @@
-
+def calcular_tempo_seek(bloco_atual, proximo_bloco):
+    tempo_seek = 0
+    
+    if bloco_atual // 8 != proximo_bloco // 8:
+        tempo_seek = abs(proximo_bloco // 8 - bloco_atual // 8)
+    return tempo_seek
 
 def cscan(bloco_inicial, lista_requisicoes):
     bloco_atual = bloco_inicial
@@ -18,9 +23,6 @@ def cscan(bloco_inicial, lista_requisicoes):
         if (lista_requisicoes[i] > bloco_inicial):
             right.append(lista_requisicoes[i])
 
-    # Dividindo a lista em left e right
-    # left = [bloco for bloco in lista_requisicoes if bloco < bloco_atual]
-    # right = [bloco for bloco in lista_requisicoes if bloco >= bloco_atual]
 
     # Ordena as solicitações em left e right
     left.sort()
@@ -30,7 +32,7 @@ def cscan(bloco_inicial, lista_requisicoes):
     for i in range(len(right)):
         proximo_bloco = right[i]
         sequencia_atendimento.append(proximo_bloco)  # Adicionando o bloco atendido à sequência
-        tempo_seek += abs(proximo_bloco - bloco_atual)
+        tempo_seek += calcular_tempo_seek(bloco_atual, proximo_bloco)
         latencia_total = tempo_seek
         bloco_atual = proximo_bloco
 

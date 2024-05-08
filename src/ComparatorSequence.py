@@ -38,8 +38,7 @@ tamanhos = list(map(len, new_list))
 # Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
 latencias_cscan = [cscan.cscan(max(new_list[i])//2, new_list [i]) for i in range(len(new_list ))]
 latencias_sstf = [sstf.sstf_com_latency(max(new_list[i]) //2, new_list [i]) for i in range(len(new_list ))]
-print("maior cscan" ,latencias_cscan )
-print("maior sstf" ,latencias_sstf )  
+ 
 
 # Plotando o gráfico de linha
 plt.figure(figsize=(10, 6))
