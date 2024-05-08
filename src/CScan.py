@@ -6,6 +6,7 @@ def calcular_tempo_seek(bloco_atual, proximo_bloco):
     return tempo_seek
 
 def cscan(bloco_inicial, lista_requisicoes):
+    print(bloco_inicial)
     bloco_atual = bloco_inicial
     latencia_total = 0
     sequencia_atendimento = []  # Lista para armazenar a sequência de atendimentos
