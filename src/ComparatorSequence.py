@@ -1,126 +1,36 @@
 import matplotlib.pyplot as plt
-import numpy as np
+import random
 import copy
 import CScan as cscan
 import SSTF as sstf
 
-#HEAD no meio 
+def criar_lista_sequencial(start):
+    return list(range(start, start + 100))
 
-requests0 = list(range(1))
-requests1 = list(range(1000))
-requests2 = list(range(2000))
-requests3 = list(range(3000))
-requests4 = list(range(4000))
-requests5 = list(range(5000))
-requests6 = list(range(6000))
-requests7 = list(range(7000))
-requests8 = list(range(8000))
-requests9 = list(range(9000))
-requests10 = list(range(10000))
+def criar_sequencia():
+    return [criar_lista_sequencial(i * 100) for i in range(50)]
 
-new_list = [
-    requests0,
-    requests1,
-    requests2,
-    requests3,
-    requests4,
-    requests5,
-    requests6,
-    requests7,
-    requests8,
-    requests9,
-    requests10
-]
+def gerar_head():
+    return random.randint(0, 5000)
 
-new_list1 = [
-    copy.deepcopy(requests0),
-    copy.deepcopy(requests1),
-    copy.deepcopy(requests2),
-    copy.deepcopy(requests3),
-    copy.deepcopy(requests4),
-    copy.deepcopy(requests5),
-    copy.deepcopy(requests6),
-    copy.deepcopy(requests7),
-    copy.deepcopy(requests8),
-    copy.deepcopy(requests9),
-    copy.deepcopy(requests10)
-]
+def chamar_alogoritmos():
+    listas_sequenciais = criar_sequencia()
+    head = gerar_head()
+    latencias_cscan = [cscan.cscan(head, lista) for lista in listas_sequenciais]
+    latencias_sstf = [sstf.sstf(head, lista) for lista in listas_sequenciais]
+    tamanhos = [len(lista) for lista in listas_sequenciais]
+    indices = list(range(1, len(listas_sequenciais) + 1))
+    return indices, latencias_cscan , latencias_sstf
 
-new_list2 = copy.deepcopy(new_list1)
+def gerar_grafico():
+    indices, latencias_cscan, latencias_sstf = chamar_alogoritmos()
+    plt.figure(figsize=(10, 6))
+    plt.plot(indices, latencias_cscan, label='C-SCAN')
+    plt.plot(indices, latencias_sstf, label='SSTF')
+    plt.title("Sequência ordenanda com cabeça posicionada gerada aleatoriamente")
+    plt.xlabel("Lista de Requisições")
+    plt.ylabel("Distância Percorrida")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
 
-
-# Calculando o tamanho das listas de requisições
-tamanhos = list(map(len, new_list))
-
-# Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan(new_list[i][len(new_list[i]) // 4], new_list [i]) for i in range(len(new_list ))]
-latencias_sstf = [sstf.sstf_com_latency(new_list[i][len(new_list[i]) // 4], new_list [i]) for i in range(len(new_list ))]
- 
-
-# Plotando o gráfico de linha
-plt.figure(figsize=(10, 6))
-
-# Plotando os dados de latência para cada algoritmo
-plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
-plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
-
-plt.title("Lista sequencial com cabeça posicionada no quarto inicial da lista")
-plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Distância Percorrida")
-plt.xticks(tamanhos)
-plt.legend()
-
-plt.grid(True)
-plt.show()
-
-
-# Calculando o tamanho das listas de requisições
-tamanhos = list(map(len, new_list1))
-
-latencias_cscan = [cscan.cscan(max(new_list1[i])//2, new_list1[i]) for i in range(len(new_list1))]
-latencias_sstf = [sstf.sstf_com_latency(max(new_list1[i])//2, new_list1 [i]) for i in range(len(new_list1))]
-
-print(tamanhos)
-print(latencias_cscan)
-print(latencias_sstf)
-# Plotando o gráfico de linha
-plt.figure(figsize=(10, 6))
-
-# Plotando os dados de latência para cada algoritmo
-plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
-plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
-
-plt.title("Lista sequencial com cabeça posicionada na requisição do meio")
-plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Distância Percorrida")
-plt.xticks(tamanhos)
-plt.legend()
-
-plt.grid(True)
-plt.show()
-
-
-# Calculando o tamanho das listas de requisições
-tamanhos = list(map(len, new_list2))
-
-latencias_cscan = [cscan.cscan(new_list2[i][len(new_list2[i]) *3 // 4], new_list2[i]) for i in range(len(new_list2 ))]
-latencias_sstf = [sstf.sstf_com_latency(new_list2[i][len(new_list2[i]) *3 // 4], new_list2 [i]) for i in range(len(new_list2))]
-
-print(tamanhos)
-print(latencias_cscan)
-print(latencias_sstf)
-# Plotando o gráfico de linha
-plt.figure(figsize=(10, 6))
-
-# Plotando os dados de latência para cada algoritmo
-plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
-plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
-
-plt.title("Lista sequencial com cabeça posicionada no quarto final da lista")
-plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Distância Percorrida")
-plt.xticks(tamanhos)
-plt.legend()
-
-plt.grid(True)
-plt.show()

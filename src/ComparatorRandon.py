@@ -3,137 +3,33 @@ import numpy as np
 import CScan as cscan
 import SSTF as sstf
 import copy
+import random
 
+def criar_lista():
+    return list(np.random.randint(0, 5000, size=100))
 
+def criar_sequencia():
+    return [criar_lista() for _ in range(100)]
 
-requests0 = list(np.random.randint(0, 10, size=1))
-requests1 = list(np.random.randint(0, 100000, size=1000))
-requests2 = list(np.random.randint(0, 200000, size=2000))
-requests3 = list(np.random.randint(0, 300000, size=3000))
-requests4 = list(np.random.randint(0, 400000, size=4000))
-requests5 = list(np.random.randint(0, 500000, size=5000))
-requests6 = list(np.random.randint(0, 600000, size=6000))
-requests7 = list(np.random.randint(0, 700000, size=7000))
-requests8 = list(np.random.randint(0, 800000, size=8000))
-requests9 = list(np.random.randint(0, 900000, size=9000))
-requests10 = list(np.random.randint(0, 1000000, size=10000))
+def gerar_head():
+    return random.randint(0, 5000)
 
-# Ordenando as listas
-requests1.sort()
-requests2.sort()
-requests3.sort()
-requests4.sort()
-requests5.sort()
-requests6.sort()
-requests7.sort()
-requests8.sort()
-requests9.sort()
-requests10.sort()
+def chamar_alogoritmos():
+    listas_sequenciais = criar_sequencia()
+    head = gerar_head()
+    latencias_cscan = [cscan.cscan(head, lista) for lista in listas_sequenciais]
+    latencias_sstf = [sstf.sstf(head, lista) for lista in listas_sequenciais]
+    indices = list(range(1, len(listas_sequenciais) + 1))
+    return indices, latencias_cscan , latencias_sstf
 
-# Copiando as listas usando deepcopy para que não sejam modificadas
-new_list1 = [copy.deepcopy(requests0),
-             copy.deepcopy(requests1),
-             copy.deepcopy(requests2),
-             copy.deepcopy(requests3),
-             copy.deepcopy(requests4),
-             copy.deepcopy(requests5),
-             copy.deepcopy(requests6),
-             copy.deepcopy(requests7),
-             copy.deepcopy(requests8),
-             copy.deepcopy(requests9),
-             copy.deepcopy(requests10)]
-
-new_list2 = copy.deepcopy(new_list1)
-
-# Criando new_list sem deepcopy, as listas nessa lista podem ser modificadas
-new_list = [requests0,
-            requests1,
-            requests2,
-            requests3,
-            requests4,
-            requests5,
-            requests6,
-            requests7,
-            requests8,
-            requests9,
-            requests10]
-
-
-#HEAD NO ELEMENTO DO MEIO 
-
-tamanhos = list(map(len, new_list))
-
-# Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan(new_list[i][len(new_list[i]) // 4], new_list [i]) for i in range(len(new_list))]
-latencias_sstf = [sstf.sstf_com_latency(new_list[i][len(new_list[i]) // 4], new_list [i]) for i in range(len(new_list ))] 
-
-# Plotando o gráfico de linha
-plt.figure(figsize=(10, 6))
-
-# Plotando os dados de latência para cada algoritmo
-plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
-plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
-
-plt.title("Sequência aleatória com cabeça posicionada no quarto inicial da lista")
-plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Distância Percorrida")
-plt.xticks(tamanhos)
-plt.legend()
-
-plt.grid(True)
-plt.show()
-
-
-
-#HEAD NO MAIOR ELEMENTO DA LISTA
-
-# Calculando o tamanho das listas de requisições
-tamanhos = list(map(len, new_list1))
-
-# Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan( new_list1[i][len(new_list1[i]) // 2], new_list1 [i]) for i in range(len(new_list1 ))]
-latencias_sstf = [sstf.sstf_com_latency(new_list1[i][len(new_list1[i]) // 2], new_list1 [i]) for i in range(len(new_list1 ))]
-
-# Plotando o gráfico de linha
-plt.figure(figsize=(10, 6))
-
-# Plotando os dados de latência para cada algoritmo
-plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
-plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
-
-plt.title("Sequência aleatória com cabeça posicionada na requisição do meio")
-plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Distância percorrida")
-plt.xticks(tamanhos)
-plt.legend()
-
-plt.grid(True)
-plt.show()
-
-
-
-
-#HEAD NO MAIOR ELEMENTO DA LISTA
-
-# Calculando o tamanho das listas de requisições
-tamanhos = list(map(len, new_list2))
-
-# Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan( new_list2[i][len(new_list2[i]) *3 // 4], new_list2 [i]) for i in range(len(new_list2 ))]
-latencias_sstf = [sstf.sstf_com_latency(new_list2[i][len(new_list2[i]) *3 // 4], new_list2 [i]) for i in range(len(new_list2 ))]
-
-# Plotando o gráfico de linha
-plt.figure(figsize=(10, 6))
-
-# Plotando os dados de latência para cada algoritmo
-plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
-plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
-
-plt.title("Sequência aleatória com cabeça posicionada no quarto final da lista")
-plt.xlabel("Tamanho das Listas de Requisições")
-plt.ylabel("Distância percorrida")
-plt.xticks(tamanhos)
-plt.legend()
-
-plt.grid(True)
-plt.show()
+def gerar_grafico():
+    indices, latencias_cscan, latencias_sstf = chamar_alogoritmos()
+    plt.figure(figsize=(10, 6))
+    plt.plot(indices, latencias_cscan, label='C-SCAN')
+    plt.plot(indices, latencias_sstf, label='SSTF')
+    plt.title("Sequência aleatória com cabeça gerada aleatoriamente")
+    plt.xlabel("Lista de Requisições")
+    plt.ylabel("Distância Percorrida")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
