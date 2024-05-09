@@ -58,39 +58,14 @@ new_list = [requests0,
             requests9,
             requests10]
 
-# Criando head_menor_meio com o elemento do meio de cada lista
-head_menor_meio = [0] + [np.random.randint(0, requests[len(requests)// 2])
-    for requests in [requests1, 
-                     requests2, 
-                     requests3, 
-                     requests4, 
-                     requests5, 
-                     requests6, 
-                     requests7, 
-                     requests8, 
-                     requests9, 
-                     requests10]]
-
-head_maior_meio = [np.random.choice(requests[len(requests) // 2:]) 
-    for requests in [requests0, 
-                     requests1, 
-                     requests2, 
-                     requests3, 
-                     requests4, 
-                     requests5, 
-                     requests6, 
-                     requests7,  
-                     requests8, 
-                     requests9,   
-                     requests10]]
 
 #HEAD NO ELEMENTO DO MEIO 
 
 tamanhos = list(map(len, new_list))
 
 # Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan(new_list[i][len(new_list[i]) //2], new_list [i]) for i in range(len(new_list))]
-latencias_sstf = [sstf.sstf_com_latency(new_list[i][len(new_list[i]) //2], new_list [i]) for i in range(len(new_list ))] 
+latencias_cscan = [cscan.cscan(new_list[i][len(new_list[i]) // 4], new_list [i]) for i in range(len(new_list))]
+latencias_sstf = [sstf.sstf_com_latency(new_list[i][len(new_list[i]) // 4], new_list [i]) for i in range(len(new_list ))] 
 
 # Plotando o gráfico de linha
 plt.figure(figsize=(10, 6))
@@ -99,7 +74,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
 plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
 
-plt.title("Sequência aleatória com head na requisição do meio")
+plt.title("Sequência aleatória com cabeça posicionada no quarto inicial da lista")
 plt.xlabel("Tamanho das Listas de Requisições")
 plt.ylabel("Distância Percorrida")
 plt.xticks(tamanhos)
@@ -116,8 +91,8 @@ plt.show()
 tamanhos = list(map(len, new_list1))
 
 # Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan( new_list1[i][len(new_list1[i]) // 4], new_list1 [i]) for i in range(len(new_list1 ))]
-latencias_sstf = [sstf.sstf_com_latency(new_list1[i][len(new_list1[i]) // 4], new_list1 [i]) for i in range(len(new_list1 ))]
+latencias_cscan = [cscan.cscan( new_list1[i][len(new_list1[i]) // 2], new_list1 [i]) for i in range(len(new_list1 ))]
+latencias_sstf = [sstf.sstf_com_latency(new_list1[i][len(new_list1[i]) // 2], new_list1 [i]) for i in range(len(new_list1 ))]
 
 # Plotando o gráfico de linha
 plt.figure(figsize=(10, 6))
@@ -126,7 +101,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
 plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
 
-plt.title("Sequência aleatória com head aleatório do início ao meio")
+plt.title("Sequência aleatória com cabeça posicionada na requisição do meio")
 plt.xlabel("Tamanho das Listas de Requisições")
 plt.ylabel("Distância percorrida")
 plt.xticks(tamanhos)
@@ -144,8 +119,8 @@ plt.show()
 tamanhos = list(map(len, new_list2))
 
 # Calculando a latência total para cada conjunto de requisições e bloco inicial usando C-SCAN e SSTF
-latencias_cscan = [cscan.cscan( new_list2[i][len(new_list2[i]) *2 // 3], new_list2 [i]) for i in range(len(new_list2 ))]
-latencias_sstf = [sstf.sstf_com_latency(new_list2[i][len(new_list2[i]) *2 // 3], new_list2 [i]) for i in range(len(new_list2 ))]
+latencias_cscan = [cscan.cscan( new_list2[i][len(new_list2[i]) *3 // 4], new_list2 [i]) for i in range(len(new_list2 ))]
+latencias_sstf = [sstf.sstf_com_latency(new_list2[i][len(new_list2[i]) *3 // 4], new_list2 [i]) for i in range(len(new_list2 ))]
 
 # Plotando o gráfico de linha
 plt.figure(figsize=(10, 6))
@@ -154,7 +129,7 @@ plt.figure(figsize=(10, 6))
 plt.plot(tamanhos, latencias_cscan, label='C-SCAN', marker='o')
 plt.plot(tamanhos, latencias_sstf, label='SSTF', marker='o')
 
-plt.title("Sequência aleatória com head aleatório do meio para o fim")
+plt.title("Sequência aleatória com cabeça posicionada no quarto final da lista")
 plt.xlabel("Tamanho das Listas de Requisições")
 plt.ylabel("Distância percorrida")
 plt.xticks(tamanhos)

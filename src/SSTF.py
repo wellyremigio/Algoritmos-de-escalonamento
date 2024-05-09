@@ -6,6 +6,7 @@ def calcular_tempo_seek(bloco_atual, proximo_bloco):
     return tempo_seek
 
 def sstf_com_latency(bloco_inicial, requisicoes):
+    print(requisicoes)
     print(bloco_inicial)
     bloco_atual = bloco_inicial
     total_latencia = 0
